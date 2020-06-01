@@ -1,7 +1,7 @@
 /**
  * Movie.java
- * @author
- * @author
+ * @author Daniil Durnev
+ * @author Simon Zhang
  * CIS 22C, Lab 5
  */
 
@@ -23,7 +23,7 @@ public class Movie implements Comparable<Movie>{
      * given in Millions of dollars
      */
     public Movie(String title, String director,
-            int year, double gross) {
+                 int year, double gross) {
         this.title = title;
         this.director = director;
         this.year = year;
@@ -111,7 +111,13 @@ public class Movie implements Comparable<Movie>{
      * as follows: XXX,XXX.XX
      */
     @Override public String toString() {
-        String result = "";
+        String grossString = new DecimalFormat("$###,###.00").format(grossMillions);
+
+        String result = "Title: " + title +
+                "\nDirector: " + director +
+                "\nYear: " + year
+                + "\nGross in Millions: " + grossString+"\n";
+
         return result;
     }
 
@@ -122,7 +128,15 @@ public class Movie implements Comparable<Movie>{
      * @return whether the Movies are equal
      */
     @Override public boolean equals(Object o) {
-        return false;
+        if(this == o) {
+            return true;
+        } else if(!(o instanceof Movie)) {
+            return false;
+        } else {
+            Movie otherMovie = (Movie) o;
+
+            return otherMovie.getTitle().equals(this.title) && otherMovie.getDirector().equals(this.director);
+        }
     }
 
     /**
@@ -140,7 +154,17 @@ public class Movie implements Comparable<Movie>{
      * or 1 (the other movie ordered first)
      */
     @Override public int compareTo(Movie otherMovie) {
-        return -1;
+        if(this.equals(otherMovie)) {
+            return 0;
+        } else {
+            if(this.title.compareTo(otherMovie.title) == 0) {
+                return this.director.compareTo(otherMovie.getDirector());
+            } else if (this.title.compareTo(otherMovie.getTitle()) < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
     }
 
     /**
@@ -151,7 +175,14 @@ public class Movie implements Comparable<Movie>{
      * @return the hash code
      */
     @Override public int hashCode() {
-        return -1;
-    }
+        int code = 0;
 
+        String key = title + director;
+
+        for(int i = 0; i < key.length(); i++) {
+            code += (int) key.charAt(i);
+        }
+
+        return code;
+    }
 }
