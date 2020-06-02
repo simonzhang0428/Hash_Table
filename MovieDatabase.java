@@ -12,10 +12,12 @@ import java.io.IOException;
 
 public class MovieDatabase {
     private static final int NUM_MOVIES = 26;
-    static Hash<Movie> ht = new Hash<>(NUM_MOVIES * 2);
-    static BST<Movie> bst = new BST<>();
+    Hash<Movie> ht = new Hash<>(NUM_MOVIES * 2);
+    BST<Movie> bst = new BST<>();
 
     public static void main(String[] args) throws IOException {
+
+        MovieDatabase mdb = new MovieDatabase();
 
         String title;
         String director;
@@ -35,8 +37,8 @@ public class MovieDatabase {
             }
 
             Movie movie = new Movie(title, director, year, grossMillions);
-            bst.insert(movie);
-            ht.insert(movie);
+            mdb.bst.insert(movie);
+            mdb.ht.insert(movie);
         }
 
         input = new Scanner(System.in);
@@ -72,8 +74,8 @@ public class MovieDatabase {
                     input.nextLine();
 
                     Movie newMovie = new Movie(title, director, year, grossMillions);
-                    ht.insert(newMovie);
-                    bst.insert(newMovie);
+                    mdb.ht.insert(newMovie);
+                    mdb.bst.insert(newMovie);
 
                     System.out.println("\n" + title + " was added!\n");
 
@@ -90,12 +92,12 @@ public class MovieDatabase {
                     switch (Dselection) {
                         case "S": {
                             System.out.println("\nDisplaying Movies:\n");
-                            bst.inOrderPrint();
+                            mdb.bst.inOrderPrint();
                             break;
                         }
                         case "U": {
                             System.out.println("\nDisplaying Movies:\n");
-                            System.out.println(ht);
+                            System.out.println(mdb.ht);
                             break;
                         }
                     }
@@ -112,8 +114,8 @@ public class MovieDatabase {
                     Movie dummy = new Movie(title, director, -1, -1);
 
                     try {
-                        ht.remove(dummy);
-                        bst.remove(dummy);
+                        mdb.ht.remove(dummy);
+                        mdb.bst.remove(dummy);
 
                         System.out.println("\n" + director + "'s " + title + " was removed!\n");
                     } catch (NoSuchElementException e) {
@@ -131,7 +133,7 @@ public class MovieDatabase {
 
                     Movie dummy = new Movie(title, director, -1, -1);
 
-                    boolean found = bst.search(dummy);
+                    boolean found = mdb.bst.search(dummy);
                     if (found) {
                         System.out.println("\n" + director + "'s " + title + " is in the database!\n");
                     } else {
