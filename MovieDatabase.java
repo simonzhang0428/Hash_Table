@@ -23,7 +23,7 @@ public class MovieDatabase {
         String director;
         int year;
         double grossMillions;
-        File file = new File("D:/Apps/untitled/src/movies.txt");
+        File file = new File("movies.txt");
         Scanner input = new Scanner(file);
 
         while (input.hasNextLine()) {
@@ -55,7 +55,7 @@ public class MovieDatabase {
             System.out.println("S. Search for a Movie");
             System.out.println("X. Exit\n");
 
-            System.out.print("Enter your choice: ");
+            System.out.print("Enter your choice: ").toUpperCase();
             String selection = input.nextLine();
 
             switch (selection) {
@@ -87,7 +87,7 @@ public class MovieDatabase {
                     System.out.println("U. Unsorted\n");
 
                     System.out.print("Enter your choice: ");
-                    String Dselection = input.nextLine();
+                    String Dselection = input.nextLine().toUpperCase();
 
                     switch (Dselection) {
                         case "S": {
